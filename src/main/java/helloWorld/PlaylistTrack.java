@@ -13,7 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 
-@Entity(name = "PlaylistTrack")
+@Entity(name = "playlisttrack")
 public class PlaylistTrack {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

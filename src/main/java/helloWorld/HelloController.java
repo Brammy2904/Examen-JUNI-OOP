@@ -1,5 +1,6 @@
 package helloWorld;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -19,7 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class HelloController {
-	
+		List<String> blackList = new ArrayList<String>();
+		
 	@Autowired
 	private AddToDb add;
 	
@@ -29,6 +31,8 @@ public class HelloController {
 	
 	@Autowired
 	private PlaylistRepository playlistRepo;
+	@Autowired
+	private PlaylistTrackRepository playtrackRepo;
 	
 	
 	
@@ -37,8 +41,25 @@ public class HelloController {
 		
 		return trackRep.getAllTracks();
 	}
+	@GetMapping("/remove")
+	public String remove(@RequestParam(required = true) String trackName) {
+		Integer id = trackRep.getId(trackName).id;
+		 playtrackRepo.delete(id);
+		trackRep.delete(id);
+		
+		
+		return "verwijderd";
+	}
 	@GetMapping("/add")
 	public String add(@RequestParam(required=true) String trackName, @RequestParam(required=true) Double price, @RequestParam(required=true) String playlistName) {
+		blackList.add("penis");
+		blackList.add("fuck");
+		blackList.add("cock");
+		blackList.add("pussy");
+		//dit zijn er weinig maar het is maar een voorbeeld
+		if(blackList.contains(trackName.toLowerCase()) || blackList.contains(playlistName.toLowerCase())) {
+			return "Geen vieze woorden aub";
+		}
 		Track track1 = trackRep.byName(trackName);
 		if(track1 == null) {
 			add.initTrack(trackName, price);

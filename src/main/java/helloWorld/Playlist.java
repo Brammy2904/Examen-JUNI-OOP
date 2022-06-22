@@ -2,6 +2,7 @@ package helloWorld;
 
 import java.sql.Blob;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -35,6 +36,31 @@ public class Playlist {
 
 	public void setName(String name) {
 		Name = name;
+	}
+	public Playlist() {
+		
+		
+	}
+	public Playlist(Integer id, String name) {
+		this.Id = id;
+		this.Name = name;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(Id, Name);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Playlist other = (Playlist) obj;
+		return Objects.equals(Id, other.Id) && Objects.equals(Name, other.Name);
 	}
 
 	
